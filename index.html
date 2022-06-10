@@ -7,13 +7,29 @@
     <script src="https://unpkg.com/react@16.7.0-alpha.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.7.0-alpha.0/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone@7.18.4/babel.min.js"></script>
+    <style>
+        #app, h3, p {
+            text-align: center;
+            font-family: sans-serif;
+        }
+        #problem{
+            font-size: 36px;
+        }
+        .incorrect {
+            color: red;
+        }
+        #winner {
+            font-size: 50px;
+            color: green;
+        }
+    </style>
     <title>Counter</title>
 </head>
 <body>
     <div>
         <h3>Перевірка знань з множення</h3>
-        <p>Кількість набраних очок на рахунку</p> 
-        <p>дорівнює кількості хвилин гри у Pubg</p>
+        <p>Для наших дітей та дорослих)</p> 
+        <p>Для виграшу треба набрати 10 балів</p>
     </div>
     <div id="app"></div>
     <script type="text/babel">
@@ -25,7 +41,8 @@
                 num1: 1,
                 num2: 2,
                 response: "",
-                score: 0
+                score: 0,
+                incorrect: false
             });
 
             function inputKeyPress(event) {
@@ -38,7 +55,8 @@
                             response: "",
                             num1: Math.ceil(Math.random() * 10),
                             num2: Math.ceil(Math.random() * 10),
-                            score: state.score + 1
+                            score: state.score + 1,
+                            incorrect: false
                         })
                     }
                     else{
@@ -46,7 +64,8 @@
                         setState({
                             ...state,
                             response: "",
-                            score: state.score - 1
+                            score: state.score - 1,
+                            incorrect: true
                         })
                     }
                 }
@@ -58,12 +77,18 @@
                     response: event.target.value
                 })
             }
+            if(state.score === 2){
+                return (
+                    <div id="winner">Ви виграли!</div>
+                )
+                
+            }
             
 
             return (
                 <div>
-                    <div>{state.num1} * {state.num2}</div>
-                    <input onKeyPress={inputKeyPress} onChange={updateResponse} value={state.response}/>
+                    <div className={state.incorrect ? "incorrect" : ""} id="problem">{state.num1} * {state.num2}</div>
+                    <input autoFocus={true} onKeyPress={inputKeyPress} onChange={updateResponse} value={state.response}/>
                     <div>Рахунок: {state.score}</div>
                 </div>
             )
