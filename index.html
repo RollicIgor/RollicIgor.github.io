@@ -22,15 +22,15 @@
             font-size: 50px;
             color: green;
         }
+        #common {
+            font-size: 30px;
+            color: green;
+        }
     </style>
     <title>Counter</title>
 </head>
 <body>
-    <div>
-        <h3>Перевірка знань з множення</h3>
-        <p>Для наших дітей та дорослих)</p> 
-        <p>Для виграшу треба набрати 10 балів</p>
-    </div>
+    
     <div id="app"></div>
     <script type="text/babel">
         
@@ -83,13 +83,29 @@
                 )
                 
             }
-            
+            if(state.score >= 1) {
+                document.querySelector("#common").innerHTML = "Так тримати!"
+            }
+            if(state.score >= 3) {
+                document.querySelector("#common").innerHTML = "Давай, давай!!!"
+            }
+            if(state.score >= 5) {
+                document.querySelector("#common").innerHTML = "Молодець!!!"
+            }
+            if(state.score >= 8) {
+                document.querySelector("#common").innerHTML = "Уперед до перемоги!!!"
+            }
 
             return (
                 <div>
+                    <h3>Перевірка знань з множення</h3>
+                    <p>Для наших дітей та дорослих)</p> 
+                    <p>Для виграшу треба набрати 10 балів</p>
                     <div className={state.incorrect ? "incorrect" : ""} id="problem">{state.num1} * {state.num2}</div>
                     <input autoFocus={true} onKeyPress={inputKeyPress} onChange={updateResponse} value={state.response}/>
                     <div>Рахунок: {state.score}</div>
+                    <div id="common"></div>
+                    <div id="onemore"></div>
                 </div>
             )
         }
